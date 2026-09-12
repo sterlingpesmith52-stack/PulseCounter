@@ -1,1 +1,123 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PulseCounter</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background: #111;
+            color: #eee;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        #count {
+            font-size: 64px;
+            font-weight: 700;
+            margin: 40px 0;
+            transition: transform 0.15s ease;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        button {
+            padding: 12px 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #0078d4;
+            color: white;
+            transition: background 0.2s;
+        }
+
+        body.dark-mode button {
+            background: #005a9e;
+        }
+
+        .toggle {
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>PulseCounter</h1>
+
+    <div class="container">
+        <div id="count">0</div>
+
+        <div class="buttons">
+            <button id="inc">+1</button>
+            <button id="dec">-1</button>
+            <button id="reset">Reset</button>
+        </div>
+
+        <div class="toggle" id="toggle">Toggle Dark Mode</div>
+    </div>
+
+    <script>
+        let count = 0;
+        const countEl = document.getElementById("count");
+
+        function pulse() {
+            countEl.style.transform = "scale(1.2)";
+            setTimeout(() => {
+                countEl.style.transform = "scale(1)";
+            }, 150);
+        }
+
+        document.getElementById("inc").addEventListener("click", () => {
+            count++;
+            countEl.textContent = count;
+            pulse();
+        });
+
+        document.getElementById("dec").addEventListener("click", () => {
+            count--;
+            countEl.textContent = count;
+            pulse();
+        });
+
+        document.getElementById("reset").addEventListener("click", () => {
+            count = 0;
+            countEl.textContent = count;
+            pulse();
+        });
+
+        document.getElementById("toggle").addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+        });
+    </script>
+</body>
+</html>
