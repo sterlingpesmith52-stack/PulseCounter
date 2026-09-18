@@ -135,19 +135,27 @@
         let seconds = 0;
         let beats = 0;
         let lastBeatTime = null;
+        let timerStarted = false;
+        let timerInterval = null;
 
         const secondsEl = document.getElementById("seconds");
         const countEl = document.getElementById("count");
         const bpmEl = document.getElementById("bpm");
 
-        // Seconds-only timer
-        setInterval(() => {
-            seconds++;
-            secondsEl.textContent = "Seconds: " + seconds;
-        }, 1000);
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                seconds++;
+                secondsEl.textContent = "Seconds: " + seconds;
+            }, 1000);
+        }
 
         // +1 beat
         document.getElementById("plus").addEventListener("click", () => {
+            if (!timerStarted) {
+                timerStarted = true;
+                startTimer();
+            }
+
             beats++;
             countEl.textContent = beats;
 
@@ -173,6 +181,10 @@
             seconds = 0;
             beats = 0;
             lastBeatTime = null;
+            timerStarted = false;
+
+            clearInterval(timerInterval);
+            timerInterval = null;
 
             secondsEl.textContent = "Seconds: 0";
             countEl.textContent = "0";
