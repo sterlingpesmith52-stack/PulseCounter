@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>PulseCounter</title>
 
     <style>
@@ -83,15 +83,16 @@
             display: inline-block;
             width: auto;
             padding: 10px 16px;
-            font-size: 16px;
+            font-size: 17px; /* prevents iPhone Chrome/Safari zoom */
             border-radius: 8px;
             border: none;
             cursor: pointer;
             background: var(--button-blue);
             color: white;
+            -webkit-text-size-adjust: 100%;
         }
 
-        #minus, #reset {
+        #stop, #reset {
             background: #666;
         }
 
@@ -99,7 +100,7 @@
             background: var(--button-blue-dark);
         }
 
-        body.dark-mode #minus,
+        body.dark-mode #stop,
         body.dark-mode #reset {
             background: #555;
         }
@@ -124,7 +125,7 @@
 
         <div class="button-row">
             <button id="plus">+1</button>
-            <button id="minus">-1</button>
+            <button id="stop">Stop</button>
             <button id="reset">Reset</button>
         </div>
 
@@ -137,6 +138,7 @@
         let lastBeatTime = null;
         let timerStarted = false;
         let timerInterval = null;
+        let timerFrozen = false;
 
         const secondsEl = document.getElementById("seconds");
         const countEl = document.getElementById("count");
@@ -151,6 +153,8 @@
 
         // +1 beat
         document.getElementById("plus").addEventListener("click", () => {
+            if (timerFrozen) return; // Stop prevents further timing
+
             if (!timerStarted) {
                 timerStarted = true;
                 startTimer();
@@ -170,10 +174,10 @@
             lastBeatTime = seconds;
         });
 
-        // -1 beat
-        document.getElementById("minus").addEventListener("click", () => {
-            if (beats > 0) beats--;
-            countEl.textContent = beats;
+        // Stop (permanent freeze)
+        document.getElementById("stop").addEventListener("click", () => {
+            if (timerInterval) clearInterval(timerInterval);
+            timerFrozen = true;
         });
 
         // Reset
@@ -182,6 +186,7 @@
             beats = 0;
             lastBeatTime = null;
             timerStarted = false;
+            timerFrozen = false;
 
             clearInterval(timerInterval);
             timerInterval = null;
