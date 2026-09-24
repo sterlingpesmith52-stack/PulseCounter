@@ -32,10 +32,25 @@
             color: var(--text-dark);
         }
 
-        h1 {
-            margin: 24px 0 0 20px;
-            font-size: 28px;
+        /* MICROFOUNDARY HEADER */
+        .mf-header {
+            display: flex;
+            flex-direction: column;      /* logo above title */
+            align-items: flex-start;     /* left aligned */
+            padding: 16px 20px 0 20px;
+        }
+
+        .mf-logo {
+            height: 32px;                /* smaller logo */
+            width: auto;
+            margin-bottom: 4px;          /* small gap before title */
+        }
+
+        .mf-title {
+            font-size: 24px;             /* MicroFoundary standard */
             font-weight: 600;
+            margin: 0;
+            padding: 0;
             text-align: left;
         }
 
@@ -83,7 +98,7 @@
             display: inline-block;
             width: auto;
             padding: 10px 16px;
-            font-size: 17px; /* prevents iPhone Chrome/Safari zoom */
+            font-size: 17px;
             border-radius: 8px;
             border: none;
             cursor: pointer;
@@ -116,7 +131,12 @@
 </head>
 
 <body>
-    <h1>PulseCounter</h1>
+
+    <!-- MICROFOUNDARY HEADER -->
+    <div class="mf-header">
+        <img src="IMG_1741.jpeg" class="mf-logo">
+        <h1 class="mf-title">PulseCounter</h1>
+    </div>
 
     <div class="container">
         <div id="seconds">Seconds: 0</div>
@@ -151,9 +171,8 @@
             }, 1000);
         }
 
-        // +1 beat
         document.getElementById("plus").addEventListener("click", () => {
-            if (timerFrozen) return; // Stop prevents further timing
+            if (timerFrozen) return;
 
             if (!timerStarted) {
                 timerStarted = true;
@@ -174,13 +193,11 @@
             lastBeatTime = seconds;
         });
 
-        // Stop (permanent freeze)
         document.getElementById("stop").addEventListener("click", () => {
             if (timerInterval) clearInterval(timerInterval);
             timerFrozen = true;
         });
 
-        // Reset
         document.getElementById("reset").addEventListener("click", () => {
             seconds = 0;
             beats = 0;
@@ -196,7 +213,6 @@
             bpmEl.textContent = "BPM: 0";
         });
 
-        // Dark mode toggle
         document.getElementById("toggle").addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
         });
