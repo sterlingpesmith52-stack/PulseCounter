@@ -7,7 +7,7 @@
 
     <style>
         :root {
-            --bg-light: #f7f7f7;
+            --bg-light: #ffffff;
             --bg-dark: #111;
             --text-light: #222;
             --text-dark: #eee;
@@ -35,19 +35,19 @@
         /* MICROFOUNDARY HEADER */
         .mf-header {
             display: flex;
-            flex-direction: column;      /* logo above title */
-            align-items: flex-start;     /* left aligned */
+            flex-direction: column;
+            align-items: flex-start;
             padding: 16px 20px 0 20px;
         }
 
         .mf-logo {
-            height: 32px;                /* smaller logo */
+            height: 32px;
             width: auto;
-            margin-bottom: 4px;          /* small gap before title */
+            margin-bottom: 4px;
         }
 
         .mf-title {
-            font-size: 24px;             /* MicroFoundary standard */
+            font-size: 24px;
             font-weight: 600;
             margin: 0;
             padding: 0;
@@ -56,7 +56,7 @@
 
         .container {
             max-width: 600px;
-            margin: 20px auto;
+            margin: 20px auto 100px auto; /* space above fixed footer */
             padding: 20px;
             background: var(--panel-light);
             border-radius: 10px;
@@ -127,6 +127,38 @@
             font-size: 14px;
             opacity: 0.8;
         }
+
+        /* FIXED BUY FOOTER */
+        .buy-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--panel-light);
+            border-top: 1px solid var(--border-light);
+            padding: 14px 20px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        body.dark-mode .buy-footer {
+            background: var(--panel-dark);
+            border-top: 1px solid var(--border-dark);
+        }
+
+        .buy-btn {
+            background: var(--button-blue);
+            color: white;
+            padding: 10px 16px;
+            font-size: 17px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        body.dark-mode .buy-btn {
+            background: var(--button-blue-dark);
+        }
     </style>
 </head>
 
@@ -152,6 +184,11 @@
         <div class="toggle" id="toggle">Toggle Dark Mode</div>
     </div>
 
+    <!-- FIXED BUY FOOTER -->
+    <div id="buyFooter" class="buy-footer">
+        <button class="buy-btn">Buy This Tool</button>
+    </div>
+
     <script>
         let seconds = 0;
         let beats = 0;
@@ -163,6 +200,13 @@
         const secondsEl = document.getElementById("seconds");
         const countEl = document.getElementById("count");
         const bpmEl = document.getElementById("bpm");
+
+        /* OWNERSHIP LOGIC */
+        const userOwnsTool = false; // change dynamically later
+        const buyFooter = document.getElementById("buyFooter");
+        if (userOwnsTool) {
+            buyFooter.style.display = "none";
+        }
 
         function startTimer() {
             timerInterval = setInterval(() => {
@@ -185,37 +229,4 @@
             if (lastBeatTime !== null) {
                 const diff = seconds - lastBeatTime;
                 if (diff > 0) {
-                    const bpm = Math.round(60 / diff);
-                    bpmEl.textContent = "BPM: " + bpm;
-                }
-            }
-
-            lastBeatTime = seconds;
-        });
-
-        document.getElementById("stop").addEventListener("click", () => {
-            if (timerInterval) clearInterval(timerInterval);
-            timerFrozen = true;
-        });
-
-        document.getElementById("reset").addEventListener("click", () => {
-            seconds = 0;
-            beats = 0;
-            lastBeatTime = null;
-            timerStarted = false;
-            timerFrozen = false;
-
-            clearInterval(timerInterval);
-            timerInterval = null;
-
-            secondsEl.textContent = "Seconds: 0";
-            countEl.textContent = "0";
-            bpmEl.textContent = "BPM: 0";
-        });
-
-        document.getElementById("toggle").addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-        });
-    </script>
-</body>
-</html>
+                    const bpm = Math.round(60 / diff
