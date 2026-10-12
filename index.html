@@ -1,232 +1,512 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>PulseCounter</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Advanced PulseCounter</title>
 
-    <style>
-        :root {
-            --bg-light: #ffffff;
-            --bg-dark: #111;
-            --text-light: #222;
-            --text-dark: #eee;
-            --panel-light: #ffffff;
-            --panel-dark: #1a1a1a;
-            --border-light: #ccc;
-            --border-dark: #444;
-            --button-blue: #0078d4;
-            --button-blue-dark: #005a9e;
-        }
+<style>
+:root{
+    --bg-light:#ffffff;
+    --bg-dark:#111111;
+    --panel-light:#ffffff;
+    --panel-dark:#1a1a1a;
+    --text-light:#222222;
+    --text-dark:#eeeeee;
+    --border-light:#dddddd;
+    --border-dark:#444444;
+    --blue:#0078d4;
+    --blue-dark:#005a9e;
+}
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, sans-serif;
-            background: var(--bg-light);
-            color: var(--text-light);
-        }
+body{
+    margin:0;
+    padding:0;
+    font-family:system-ui,sans-serif;
+    background:#fff;
+    color:#222;
+}
 
-        body.dark-mode {
-            background: var(--bg-dark);
-            color: var(--text-dark);
-        }
+body.dark-mode{
+    background:var(--bg-dark);
+    color:var(--text-dark);
+}
 
-        /* MICROFOUNDARY HEADER */
-        .mf-header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 16px 20px 0 20px;
-        }
+.mf-header{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    padding:16px 20px 0 20px;
+}
 
-        .mf-logo {
-            height: 32px;
-            width: auto;
-            margin-bottom: 4px;
-        }
+.mf-logo{
+    height:32px;
+    width:auto;
+    margin-bottom:4px;
+}
 
-        .mf-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0;
-            padding: 0;
-            text-align: left;
-        }
+.mf-title{
+    font-size:24px;
+    font-weight:600;
+    margin:0;
+}
 
-        .container {
-            max-width: 600px;
-            margin: 20px auto 100px auto; /* space above fixed footer */
-            padding: 20px;
-            background: var(--panel-light);
-            border-radius: 10px;
-            border: 1px solid #ddd;
-        }
+.subtitle{
+    font-size:14px;
+    opacity:.75;
+    margin-top:4px;
+}
 
-        body.dark-mode .container {
-            background: var(--panel-dark);
-            border: 1px solid #333;
-        }
+.container{
+    max-width:700px;
+    margin:20px auto 100px;
+    padding:20px;
+    border:1px solid var(--border-light);
+    border-radius:10px;
+    background:#fff;
+}
 
-        #seconds {
-            font-size: 22px;
-            margin-bottom: 12px;
-            text-align: left;
-        }
+body.dark-mode .container{
+    background:var(--panel-dark);
+    border-color:#333;
+}
 
-        #count {
-            font-size: 48px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            text-align: left;
-        }
+.section{
+    margin-bottom:24px;
+}
 
-        #bpm {
-            font-size: 22px;
-            margin-bottom: 20px;
-            text-align: left;
-        }
+.section-title{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:10px;
+}
 
-        .button-row {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-            justify-content: flex-start;
-        }
+.button-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
 
-        button {
-            display: inline-block;
-            width: auto;
-            padding: 10px 16px;
-            font-size: 17px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            background: var(--button-blue);
-            color: white;
-            -webkit-text-size-adjust: 100%;
-        }
+button{
+    padding:10px 16px;
+    border:none;
+    border-radius:8px;
+    background:var(--blue);
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+}
 
-        #stop, #reset {
-            background: #666;
-        }
+body.dark-mode button{
+    background:var(--blue-dark);
+}
 
-        body.dark-mode button {
-            background: var(--button-blue-dark);
-        }
+.secondary{
+    background:#666;
+}
 
-        body.dark-mode #stop,
-        body.dark-mode #reset {
-            background: #555;
-        }
+.display-box{
+    border:1px solid var(--border-light);
+    border-radius:8px;
+    padding:16px;
+    margin-top:12px;
+}
 
-        .toggle {
-            margin-top: 20px;
-            text-align: left;
-            cursor: pointer;
-            font-size: 14px;
-            opacity: 0.8;
-        }
+body.dark-mode .display-box{
+    border-color:var(--border-dark);
+}
 
-        /* FIXED BUY FOOTER */
-        .buy-footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--panel-light);
-            border-top: 1px solid var(--border-light);
-            padding: 14px 20px;
-            display: flex;
-            justify-content: flex-start;
-        }
+.big-number{
+    font-size:48px;
+    font-weight:600;
+    margin:10px 0;
+}
 
-        body.dark-mode .buy-footer {
-            background: var(--panel-dark);
-            border-top: 1px solid var(--border-dark);
-        }
+.result{
+    font-size:24px;
+    font-weight:600;
+    margin-top:8px;
+}
 
-        .buy-btn {
-            background: var(--button-blue);
-            color: white;
-            padding: 10px 16px;
-            font-size: 17px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+.status{
+    font-size:18px;
+    margin-top:6px;
+}
 
-        body.dark-mode .buy-btn {
-            background: var(--button-blue-dark);
-        }
-    </style>
+.history{
+    border-top:1px solid var(--border-light);
+    padding-top:10px;
+}
+
+body.dark-mode .history{
+    border-color:var(--border-dark);
+}
+
+.history-item{
+    padding:10px 0;
+    border-bottom:1px solid var(--border-light);
+}
+
+body.dark-mode .history-item{
+    border-color:var(--border-dark);
+}
+
+.toggle{
+    cursor:pointer;
+    margin-top:20px;
+    font-size:14px;
+}
+
+.buy-footer{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#fff;
+    border-top:1px solid var(--border-light);
+    padding:14px 20px;
+}
+
+body.dark-mode .buy-footer{
+    background:var(--panel-dark);
+    border-color:var(--border-dark);
+}
+
+.buy-btn{
+    background:var(--blue);
+}
+
+body.dark-mode .buy-btn{
+    background:var(--blue-dark);
+}
+</style>
 </head>
 
 <body>
 
-    <!-- MICROFOUNDARY HEADER -->
-    <div class="mf-header">
-        <img src="IMG_1741.jpeg" class="mf-logo">
-        <h1 class="mf-title">PulseCounter</h1>
-    </div>
+<div class="mf-header">
+    IMG_1741.jpeg
+    <h1 class="mf-title">Advanced PulseCounter</h1>
+    <div class="subtitle">Vital Signs Assistant</div>
+</div>
 
-    <div class="container">
-        <div id="seconds">Seconds: 0</div>
-        <div id="count">0</div>
-        <div id="bpm">BPM: 0</div>
+<div class="container">
+
+    <div class="section">
+        <div class="section-title">Mode</div>
 
         <div class="button-row">
-            <button id="plus">+1</button>
-            <button id="stop">Stop</button>
-            <button id="reset">Reset</button>
+            <button onclick="setMode('Pulse')">Pulse</button>
+            <button onclick="setMode('Respiration')">Respiration</button>
+            <button onclick="setMode('Custom')">Custom</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Duration</div>
+
+        <div class="button-row">
+            <button onclick="setDuration(15)">15 Seconds</button>
+            <button onclick="setDuration(30)">30 Seconds</button>
+            <button onclick="setDuration(60)">60 Seconds</button>
+        </div>
+    </div>
+
+    <div class="display-box">
+
+        <div id="modeDisplay">Mode: Pulse</div>
+
+        <div id="durationDisplay">
+            Duration: 15 Seconds
         </div>
 
-        <div class="toggle" id="toggle">Toggle Dark Mode</div>
+        <div class="big-number" id="count">
+            0
+        </div>
+
+        <div id="seconds">
+            Seconds: 0
+        </div>
+
+        <div class="result" id="rate">
+            Rate: 0
+        </div>
+
+        <div class="status" id="status">
+            Status: Waiting
+        </div>
+
     </div>
 
-    <!-- FIXED BUY FOOTER -->
-    <div id="buyFooter" class="buy-footer">
-        <button class="buy-btn">Buy This Tool</button>
+    <div class="section">
+        <div class="button-row">
+
+            <button id="plus">
+                +1
+            </button>
+
+            <button class="secondary" id="stop">
+                Stop
+            </button>
+
+            <button class="secondary" id="reset">
+                Reset
+            </button>
+
+            <button id="save">
+                Save Reading
+            </button>
+
+        </div>
     </div>
 
-    <script>
-        let seconds = 0;
-        let beats = 0;
-        let lastBeatTime = null;
-        let timerStarted = false;
-        let timerInterval = null;
-        let timerFrozen = false;
+    <div class="section">
+        <div class="section-title">Reading History</div>
 
-        const secondsEl = document.getElementById("seconds");
-        const countEl = document.getElementById("count");
-        const bpmEl = document.getElementById("bpm");
+        <div id="history" class="history">
+            No saved readings yet.
+        </div>
+    </div>
 
-        /* OWNERSHIP LOGIC */
-        const userOwnsTool = false; // change dynamically later
-        const buyFooter = document.getElementById("buyFooter");
-        if (userOwnsTool) {
-            buyFooter.style.display = "none";
+    <div class="toggle" onclick="toggleDarkMode()">
+        Toggle Dark Mode
+    </div>
+
+</div>
+
+<div id="buyFooter" class="buy-footer">
+    <button class="buy-btn">
+        Buy This Tool
+    </button>
+</div>
+
+<script>
+let mode = "Pulse";
+let duration = 15;
+
+let count = 0;
+let seconds = 0;
+
+let timer = null;
+let timerStarted = false;
+let timerFrozen = false;
+
+const userOwnsTool = false;
+
+if(userOwnsTool){
+    document.getElementById("buyFooter").style.display = "none";
+}
+
+const countEl = document.getElementById("count");
+const secondsEl = document.getElementById("seconds");
+const rateEl = document.getElementById("rate");
+const statusEl = document.getElementById("status");
+
+function setMode(selected){
+    mode = selected;
+
+    document.getElementById("modeDisplay").textContent =
+        "Mode: " + mode;
+
+    updateRate();
+}
+
+function setDuration(value){
+    duration = value;
+
+    document.getElementById("durationDisplay").textContent =
+        "Duration: " + duration + " Seconds";
+
+    updateRate();
+}
+
+function startTimer(){
+
+    timer = setInterval(() => {
+
+        if(timerFrozen){
+            return;
         }
 
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                seconds++;
-                secondsEl.textContent = "Seconds: " + seconds;
-            }, 1000);
+        seconds++;
+
+        secondsEl.textContent =
+            "Seconds: " + seconds;
+
+    },1000);
+}
+
+function interpret(value){
+
+    if(mode === "Pulse"){
+
+        if(value < 60){
+            return "Low";
         }
 
-        document.getElementById("plus").addEventListener("click", () => {
-            if (timerFrozen) return;
+        if(value <= 100){
+            return "Typical Adult Range";
+        }
 
-            if (!timerStarted) {
-                timerStarted = true;
-                startTimer();
-            }
+        return "Elevated";
+    }
 
-            beats++;
-            countEl.textContent = beats;
+    if(mode === "Respiration"){
 
-            if (lastBeatTime !== null) {
-                const diff = seconds - lastBeatTime;
-                if (diff > 0) {
-                    const bpm = Math.round(60 / diff
+        if(value < 12){
+            return "Low";
+        }
+
+        if(value <= 20){
+            return "Typical Adult Range";
+        }
+
+        return "Elevated";
+    }
+
+    return "Recorded";
+}
+
+function updateRate(){
+
+    let calculatedRate = Math.round(
+        (count * 60) / duration
+    );
+
+    rateEl.textContent =
+        "Rate: " + calculatedRate;
+
+    statusEl.textContent =
+        "Status: " + interpret(calculatedRate);
+}
+
+document.getElementById("plus").addEventListener("click", () => {
+
+    if(timerFrozen){
+        return;
+    }
+
+    if(!timerStarted){
+
+        timerStarted = true;
+
+        startTimer();
+    }
+
+    count++;
+
+    countEl.textContent = count;
+
+    updateRate();
+});
+
+document.getElementById("stop").addEventListener("click", () => {
+
+    timerFrozen = true;
+
+    clearInterval(timer);
+
+    statusEl.textContent =
+        "Status: Measurement Stopped";
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+
+    clearInterval(timer);
+
+    count = 0;
+    seconds = 0;
+
+    timerStarted = false;
+    timerFrozen = false;
+
+    countEl.textContent = "0";
+
+    secondsEl.textContent =
+        "Seconds: 0";
+
+    rateEl.textContent =
+        "Rate: 0";
+
+    statusEl.textContent =
+        "Status: Waiting";
+});
+
+document.getElementById("save").addEventListener("click", () => {
+
+    let rate = Math.round(
+        (count * 60) / duration
+    );
+
+    const reading = {
+        mode:mode,
+        rate:rate,
+        time:new Date().toLocaleString()
+    };
+
+    let history =
+        JSON.parse(
+            localStorage.getItem("pulseHistory")
+        ) || [];
+
+    history.unshift(reading);
+
+    localStorage.setItem(
+        "pulseHistory",
+        JSON.stringify(history)
+    );
+
+    renderHistory();
+});
+
+function renderHistory(){
+
+    const container =
+        document.getElementById("history");
+
+    let history =
+        JSON.parse(
+            localStorage.getItem("pulseHistory")
+        ) || [];
+
+    if(history.length === 0){
+
+        container.innerHTML =
+            "No saved readings yet.";
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    history.forEach(item => {
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "history-item";
+
+        div.innerHTML =
+            "<strong>" + item.rate + "</strong><br>" +
+            item.mode + "<br>" +
+            item.time;
+
+        container.appendChild(div);
+
+    });
+}
+
+function toggleDarkMode(){
+
+    document.body.classList.toggle(
+        "dark-mode"
+    );
+}
+
+renderHistory();
+</script>
+
+</body>
+</html>
