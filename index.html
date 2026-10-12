@@ -1,194 +1,187 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Advanced PulseCounter</title>
 
 <style>
-:root{
-    --bg-light:#ffffff;
-    --bg-dark:#111111;
-    --panel-light:#ffffff;
-    --panel-dark:#1a1a1a;
-    --text-light:#222222;
-    --text-dark:#eeeeee;
-    --border-light:#dddddd;
-    --border-dark:#444444;
-    --blue:#0078d4;
-    --blue-dark:#005a9e;
+*{
+    box-sizing:border-box;
 }
 
 body{
     margin:0;
-    padding:0;
-    font-family:system-ui,sans-serif;
-    background:#fff;
-    color:#222;
+    padding:16px;
+    padding-bottom:80px;
+    font-family:Arial,sans-serif;
+    background:#ffffff;
+    color:#000000;
 }
 
 body.dark-mode{
-    background:var(--bg-dark);
-    color:var(--text-dark);
+    background:#111111;
+    color:#eeeeee;
 }
 
-.mf-header{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-    padding:16px 20px 0 20px;
+.logo{
+    width:70px;
+    height:auto;
+    display:block;
+    margin-bottom:8px;
 }
 
-.mf-logo{
-    height:32px;
-    width:auto;
-    margin-bottom:4px;
-}
-
-.mf-title{
+h1{
     font-size:24px;
-    font-weight:600;
+    font-weight:700;
+    text-align:left;
     margin:0;
 }
 
 .subtitle{
-    font-size:14px;
-    opacity:.75;
+    font-size:15px;
     margin-top:4px;
+    margin-bottom:16px;
+    opacity:.8;
 }
 
 .container{
-    max-width:700px;
-    margin:20px auto 100px;
-    padding:20px;
-    border:1px solid var(--border-light);
-    border-radius:10px;
-    background:#fff;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    padding:16px;
+    background:#ffffff;
 }
 
 body.dark-mode .container{
-    background:var(--panel-dark);
-    border-color:#333;
+    background:#1a1a1a;
+    border-color:#444444;
 }
 
 .section{
-    margin-bottom:24px;
+    margin-bottom:18px;
 }
 
 .section-title{
-    font-size:18px;
+    font-size:16px;
     font-weight:600;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .button-row{
     display:flex;
+    gap:8px;
+    margin-top:10px;
+    margin-bottom:10px;
     flex-wrap:wrap;
-    gap:10px;
 }
 
 button{
-    padding:10px 16px;
+    padding:8px 12px;
+    font-size:14px;
+    font-weight:600;
     border:none;
-    border-radius:8px;
-    background:var(--blue);
-    color:white;
+    border-radius:6px;
     cursor:pointer;
-    font-size:16px;
-}
-
-body.dark-mode button{
-    background:var(--blue-dark);
+    background:#007aff;
+    color:#ffffff;
 }
 
 .secondary{
-    background:#666;
+    background:#000000;
+    color:#ffffff;
+}
+
+body.dark-mode .secondary{
+    background:#444444;
 }
 
 .display-box{
-    border:1px solid var(--border-light);
+    border:1px solid #d1d5db;
     border-radius:8px;
-    padding:16px;
-    margin-top:12px;
+    padding:12px;
 }
 
 body.dark-mode .display-box{
-    border-color:var(--border-dark);
+    border-color:#444444;
 }
 
 .big-number{
     font-size:48px;
-    font-weight:600;
+    font-weight:700;
     margin:10px 0;
 }
 
 .result{
-    font-size:24px;
-    font-weight:600;
+    font-size:22px;
+    font-weight:700;
     margin-top:8px;
 }
 
 .status{
-    font-size:18px;
     margin-top:6px;
 }
 
 .history{
-    border-top:1px solid var(--border-light);
+    border-top:1px solid #d1d5db;
     padding-top:10px;
 }
 
 body.dark-mode .history{
-    border-color:var(--border-dark);
+    border-color:#444444;
 }
 
 .history-item{
     padding:10px 0;
-    border-bottom:1px solid var(--border-light);
+    border-bottom:1px solid #d1d5db;
 }
 
 body.dark-mode .history-item{
-    border-color:var(--border-dark);
+    border-color:#444444;
 }
 
 .toggle{
-    cursor:pointer;
     margin-top:20px;
+    cursor:pointer;
     font-size:14px;
 }
 
-.buy-footer{
+.footer{
     position:fixed;
-    bottom:0;
     left:0;
     right:0;
-    background:#fff;
-    border-top:1px solid var(--border-light);
-    padding:14px 20px;
+    bottom:0;
+    background:#ffffff;
+    border-top:1px solid #d1d5db;
+    padding:10px 12px;
 }
 
-body.dark-mode .buy-footer{
-    background:var(--panel-dark);
-    border-color:var(--border-dark);
+body.dark-mode .footer{
+    background:#1a1a1a;
+    border-color:#444444;
 }
 
-.buy-btn{
-    background:var(--blue);
-}
-
-body.dark-mode .buy-btn{
-    background:var(--blue-dark);
+.buy-button{
+    display:block;
+    width:100%;
+    text-align:center;
+    text-decoration:none;
+    background:#000000;
+    color:#ffffff;
+    padding:12px;
+    border-radius:8px;
+    font-weight:600;
 }
 </style>
 </head>
 
 <body>
 
-<div class="mf-header">
-    IMG_1741.jpeg
-    <h1 class="mf-title">Advanced PulseCounter</h1>
-    <div class="subtitle">Vital Signs Assistant</div>
+IMG_1741.jpeg
+
+<h1>Advanced PulseCounter</h1>
+
+<div class="subtitle">
+    Vital Signs Assistant
 </div>
 
 <div class="container">
@@ -215,13 +208,15 @@ body.dark-mode .buy-btn{
 
     <div class="display-box">
 
-        <div id="modeDisplay">Mode: Pulse</div>
+        <div id="modeDisplay">
+            Mode: Pulse
+        </div>
 
         <div id="durationDisplay">
             Duration: 15 Seconds
         </div>
 
-        <div class="big-number" id="count">
+        <div id="count" class="big-number">
             0
         </div>
 
@@ -229,36 +224,31 @@ body.dark-mode .buy-btn{
             Seconds: 0
         </div>
 
-        <div class="result" id="rate">
+        <div id="rate" class="result">
             Rate: 0
         </div>
 
-        <div class="status" id="status">
+        <div id="status" class="status">
             Status: Waiting
         </div>
 
     </div>
 
     <div class="section">
+
         <div class="button-row">
-
-            <button id="plus">
-                +1
-            </button>
-
-            <button class="secondary" id="stop">
-                Stop
-            </button>
-
-            <button class="secondary" id="reset">
-                Reset
-            </button>
-
-            <button id="save">
-                Save Reading
-            </button>
-
+            <button id="plus">+1 Count</button>
+            <button id="stop" class="secondary">Stop</button>
         </div>
+
+        <div class="button-row">
+            <button id="reset" class="secondary">Reset</button>
+        </div>
+
+        <div class="button-row">
+            <button id="save">Save Reading</button>
+        </div>
+
     </div>
 
     <div class="section">
@@ -275,13 +265,14 @@ body.dark-mode .buy-btn{
 
 </div>
 
-<div id="buyFooter" class="buy-footer">
-    <button class="buy-btn">
+<div class="footer" id="buyFooter">
+    #
         Buy This Tool
-    </button>
+    </a>
 </div>
 
 <script>
+
 let mode = "Pulse";
 let duration = 15;
 
@@ -304,6 +295,7 @@ const rateEl = document.getElementById("rate");
 const statusEl = document.getElementById("status");
 
 function setMode(selected){
+
     mode = selected;
 
     document.getElementById("modeDisplay").textContent =
@@ -313,6 +305,7 @@ function setMode(selected){
 }
 
 function setDuration(value){
+
     duration = value;
 
     document.getElementById("durationDisplay").textContent =
@@ -333,6 +326,18 @@ function startTimer(){
 
         secondsEl.textContent =
             "Seconds: " + seconds;
+
+        if(seconds >= duration){
+
+            timerFrozen = true;
+
+            clearInterval(timer);
+
+            statusEl.textContent =
+                "Status: Measurement Complete";
+
+            document.getElementById("plus").disabled = true;
+        }
 
     },1000);
 }
@@ -370,9 +375,8 @@ function interpret(value){
 
 function updateRate(){
 
-    let calculatedRate = Math.round(
-        (count * 60) / duration
-    );
+    let calculatedRate =
+        Math.round((count * 60) / duration);
 
     rateEl.textContent =
         "Rate: " + calculatedRate;
@@ -431,6 +435,8 @@ document.getElementById("reset").addEventListener("click", () => {
 
     statusEl.textContent =
         "Status: Waiting";
+
+    document.getElementById("plus").disabled = false;
 });
 
 document.getElementById("save").addEventListener("click", () => {
@@ -452,6 +458,8 @@ document.getElementById("save").addEventListener("click", () => {
 
     history.unshift(reading);
 
+    history = history.slice(0,50);
+
     localStorage.setItem(
         "pulseHistory",
         JSON.stringify(history)
@@ -472,7 +480,7 @@ function renderHistory(){
 
     if(history.length === 0){
 
-        container.innerHTML =
+        container.textContent =
             "No saved readings yet.";
 
         return;
@@ -494,7 +502,6 @@ function renderHistory(){
             item.time;
 
         container.appendChild(div);
-
     });
 }
 
@@ -506,7 +513,9 @@ function toggleDarkMode(){
 }
 
 renderHistory();
+
 </script>
 
 </body>
 </html>
+
