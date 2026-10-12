@@ -19,11 +19,6 @@ body{
     color:#000000;
 }
 
-body.dark-mode{
-    background:#111111;
-    color:#eeeeee;
-}
-
 .logo{
     width:70px;
     height:auto;
@@ -50,11 +45,6 @@ h1{
     border-radius:8px;
     padding:16px;
     background:#ffffff;
-}
-
-body.dark-mode .container{
-    background:#1a1a1a;
-    border-color:#444444;
 }
 
 .section{
@@ -91,18 +81,10 @@ button{
     color:#ffffff;
 }
 
-body.dark-mode .secondary{
-    background:#444444;
-}
-
 .display-box{
     border:1px solid #d1d5db;
     border-radius:8px;
     padding:12px;
-}
-
-body.dark-mode .display-box{
-    border-color:#444444;
 }
 
 .big-number{
@@ -126,23 +108,9 @@ body.dark-mode .display-box{
     padding-top:10px;
 }
 
-body.dark-mode .history{
-    border-color:#444444;
-}
-
 .history-item{
     padding:10px 0;
     border-bottom:1px solid #d1d5db;
-}
-
-body.dark-mode .history-item{
-    border-color:#444444;
-}
-
-.toggle{
-    margin-top:20px;
-    cursor:pointer;
-    font-size:14px;
 }
 
 .footer{
@@ -153,11 +121,6 @@ body.dark-mode .history-item{
     background:#ffffff;
     border-top:1px solid #d1d5db;
     padding:10px 12px;
-}
-
-body.dark-mode .footer{
-    background:#1a1a1a;
-    border-color:#444444;
 }
 
 .buy-button{
@@ -238,7 +201,7 @@ IMG_1741.jpeg
 
         <div class="button-row">
             <button id="plus">+1 Count</button>
-            <button id="stop" class="secondary">Stop</button>
+            <button id="stop">Stop</button>
         </div>
 
         <div class="button-row">
@@ -257,10 +220,6 @@ IMG_1741.jpeg
         <div id="history" class="history">
             No saved readings yet.
         </div>
-    </div>
-
-    <div class="toggle" onclick="toggleDarkMode()">
-        Toggle Dark Mode
     </div>
 
 </div>
@@ -375,7 +334,7 @@ function interpret(value){
 
 function updateRate(){
 
-    let calculatedRate =
+    const calculatedRate =
         Math.round((count * 60) / duration);
 
     rateEl.textContent =
@@ -441,14 +400,14 @@ document.getElementById("reset").addEventListener("click", () => {
 
 document.getElementById("save").addEventListener("click", () => {
 
-    let rate = Math.round(
+    const rate = Math.round(
         (count * 60) / duration
     );
 
     const reading = {
-        mode:mode,
-        rate:rate,
-        time:new Date().toLocaleString()
+        mode: mode,
+        rate: rate,
+        time: new Date().toLocaleString()
     };
 
     let history =
@@ -473,7 +432,7 @@ function renderHistory(){
     const container =
         document.getElementById("history");
 
-    let history =
+    const history =
         JSON.parse(
             localStorage.getItem("pulseHistory")
         ) || [];
@@ -502,14 +461,8 @@ function renderHistory(){
             item.time;
 
         container.appendChild(div);
+
     });
-}
-
-function toggleDarkMode(){
-
-    document.body.classList.toggle(
-        "dark-mode"
-    );
 }
 
 renderHistory();
@@ -518,4 +471,3 @@ renderHistory();
 
 </body>
 </html>
-
